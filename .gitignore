@@ -1,0 +1,10 @@
+bin/
+.gradle/
+build/
+.project/
+.classpath
+*.iml
+*.ipr
+*.iws
+initScript.sh
+

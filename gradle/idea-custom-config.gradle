@@ -1,0 +1,34 @@
+apply plugin: "idea"
+
+if (project.parent == null) {
+  idea {
+    project {
+      jdkName = '1.7'
+      languageLevel = '1.7'
+    }
+    //module {
+    //  scopes.PROVIDED.plus += [ configurations.provided ]
+    //}
+  }
+}
+
+// Make JUnit run configurations use the module dir as the working directory by default
+// This is consistent with the way Gradle runs tests
+if (project.parent == null) { // only the root project has a workspace, so only apply this logic to the root
+  project.extensions.idea.workspace.iws.withXml {
+    def componentNode = it.asNode().component.find { it.@name == "RunManager"}
+    if (componentNode == null) {
+      throw new Error("Could not find RunManager node")
+    }
+    def junitConfig = componentNode.configuration.find { it.@default=="true" && it.@type=="JUnit" && it.@factoryName == "JUnit"}
+    if (junitConfig == null) {
+      throw new Error("Did not expect null JUnit node")
+    }
+    def optionNode = junitConfig.option.find{it.@name="WORKING_DIRECTORY"}
+    if (optionNode == null) {
+      optionNode = junitConfig.appendNode("option")
+      optionNode.@name="WORKING_DIRECTORY"
+    }
+    optionNode.@value='file://$MODULE_DIR$'
+  }
+}

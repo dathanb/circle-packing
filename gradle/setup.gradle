@@ -1,0 +1,13 @@
+// make sure the right source directories are there
+task "createDirs" << {
+  sourceSets*.java.srcDirs*.each { it.mkdirs() }
+  sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+build {
+  dependsOn "createDirs"
+}
+
+jar {
+    manifest.attributes("Implementation-Version": project.version)
+}
