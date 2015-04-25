@@ -1,3 +1,7 @@
+repositories {
+    mavenCentral()
+}
+
 apply plugin: "java"
 apply from: "$rootDir/gradle/idea-custom-config.gradle"
 apply from: "$rootDir/gradle/setup.gradle"
@@ -9,4 +13,6 @@ version semverVersion()
 
 dependencies {
     compile ("com.google.guava:guava:18.0")
+    testCompile "org.easytesting:fest-assert:1.4"
+    testCompile "junit:junit:4.12"
 }
