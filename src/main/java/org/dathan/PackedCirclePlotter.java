@@ -7,25 +7,30 @@ import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Stopwatch;
 
 import javafx.geometry.Point2D;
 
 public class PackedCirclePlotter {
 
     public static void main(String... args) throws IOException {
-        final int miniCircleRadius = 20;
+        final int miniCircleRadius = 10;
         final int outerCircleRadius = 400;
         final int width = 1400;
         final int height = 800;
         final int originX = 700;
         final int originY = 400;
 
+        Stopwatch started = Stopwatch.createStarted();
         Circle origin = new Circle(new Point2D(originX, originY), miniCircleRadius);
         CirclePacker circlePacker = new CirclePacker(origin, outerCircleRadius);
 
         List<Circle> packedCircles = circlePacker.getPackedCircles();
+        long elapsed = started.stop().elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("Packed " + packedCircles.size() + " circles in " + elapsed + "ms");
 
         File outputFile = new File("output/packed.svg");
         outputFile.getParentFile().mkdirs();
@@ -50,9 +55,8 @@ public class PackedCirclePlotter {
         }
 
         writer.write("</svg>\n");
-
-        System.out.println("Wrote " + packedCircles.size() + " circles");
-
         writer.close();
+
+
     }
 }
