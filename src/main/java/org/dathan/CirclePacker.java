@@ -1,11 +1,10 @@
 package org.dathan;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javafx.geometry.Point2D;
 
 public class CirclePacker {
 
@@ -46,7 +45,7 @@ public class CirclePacker {
 
             for (PackedCircle circle: currentLevel) {
                 if (inOuterCircle(circle)) {
-                    allCircles.add(new Circle(new Point2D(circle.getProjectedX(), circle.getProjectedY()), origin.getRadius()));
+                    allCircles.add(new Circle(new Point2D.Double(circle.getProjectedX(), circle.getProjectedY()), origin.getRadius()));
                     continueLoop = true;
                 }
             }
@@ -67,13 +66,7 @@ public class CirclePacker {
      * @return
      */
     private boolean inOuterCircle(PackedCircle circle) {
-        double circleX = circle.getProjectedX();
-        double circleY = circle.getProjectedY();
-
-        double deltaX = circleX - origin.getCenter().getX();
-        double deltaY = circleY - origin.getCenter().getY();
-
-        return Math.sqrt(deltaX * deltaX + deltaY * deltaY) + origin.getRadius() < outerRadius;
+        return Point2D.distance(circle.getProjectedX(), circle.getProjectedY(), origin.getCenter().getX(), origin.getCenter().getY()) + origin.getRadius() < outerRadius;
     }
 
 
