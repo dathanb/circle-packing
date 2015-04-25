@@ -3,9 +3,12 @@ repositories {
 }
 
 apply plugin: "java"
+apply plugin: "application"
 apply from: "$rootDir/gradle/idea-custom-config.gradle"
 apply from: "$rootDir/gradle/setup.gradle"
 apply plugin: "gitsemver"
+
+mainClassName="org.dathan.PackedCirclePlotter"
 
 group "org.dathan"
 description = "Project to pack circles efficiently"

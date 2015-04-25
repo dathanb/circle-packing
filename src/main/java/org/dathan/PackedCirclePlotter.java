@@ -1,18 +1,16 @@
 package org.dathan;
 
+import java.awt.geom.Point2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Stopwatch;
-
-import javafx.geometry.Point2D;
 
 public class PackedCirclePlotter {
 
@@ -25,7 +23,7 @@ public class PackedCirclePlotter {
         final int originY = 400;
 
         Stopwatch started = Stopwatch.createStarted();
-        Circle origin = new Circle(new Point2D(originX, originY), miniCircleRadius);
+        Circle origin = new Circle(new Point2D.Double(originX, originY), miniCircleRadius);
         CirclePacker circlePacker = new CirclePacker(origin, outerCircleRadius);
 
         List<Circle> packedCircles = circlePacker.getPackedCircles();

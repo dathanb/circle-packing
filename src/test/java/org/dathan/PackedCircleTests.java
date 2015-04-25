@@ -1,15 +1,15 @@
 package org.dathan;
 
+import java.awt.geom.Point2D;
+
 import org.fest.assertions.Delta;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import javafx.geometry.Point2D;
-
 public class PackedCircleTests {
 
-    private static final Circle ORIGIN = new Circle(new Point2D(0.0, 0.0), 1.0);
+    private static final Circle ORIGIN = new Circle(new Point2D.Double(0.0, 0.0), 1.0);
     private static final Delta DELTA = Delta.delta(0.00001);
 
     @Test
