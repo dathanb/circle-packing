@@ -7,14 +7,14 @@ import java.util.Set;
 
 import javafx.geometry.Point2D;
 
-public class CircleGenerator {
+public class CirclePacker {
 
-    private static final int[][] NEIGHBORS = { {1,0}, {1,1}, {0,1}, {-1,0}, {0,1}, {1,-1} };
+    private static final int[][] NEIGHBORS = { {1,0}, {1,1}, {0,1}, {-1,0}, {0,-1}, {1,-1} };
 
     private final Circle origin;
     private final double outerRadius;
 
-    public CircleGenerator(Circle origin, double outerRadius) {
+    public CirclePacker(Circle origin, double outerRadius) {
         this.origin = origin;
         this.outerRadius = outerRadius;
     }
@@ -48,6 +48,9 @@ public class CircleGenerator {
             for (PackedCircle circle: currentLevel) {
                 allCircles.add(new Circle(new Point2D(circle.getProjectedX(), circle.getProjectedY()), origin.getRadius()));
             }
+            currentLevel.clear();
+            currentLevel.addAll(nextLevel);
+            nextLevel.clear();
         }
 
         return allCircles;
