@@ -27,31 +27,33 @@ public class CirclePacker {
 
         currentLevel.add(new PackedCircle(origin, 0, 0));
 
+        boolean continueLoop = false;
+
         outerloop:
-        for (;;) {
+        do {
+            continueLoop = false;
             for (PackedCircle currentCircle: currentLevel) {
                 if (visited.contains(currentCircle)) {
                     continue;
                 }
                 visited.add(currentCircle);
 
-                if (inOuterCircle(currentCircle)) {
-                    for (int[] pair : NEIGHBORS) {
-                        PackedCircle neighbor = new PackedCircle(origin, currentCircle.getX() + pair[0], currentCircle.getY() + pair[1]);
-                        nextLevel.add(neighbor);
-                    }
-                } else {
-                    break outerloop;
+                for (int[] pair : NEIGHBORS) {
+                    PackedCircle neighbor = new PackedCircle(origin, currentCircle.getX() + pair[0], currentCircle.getY() + pair[1]);
+                    nextLevel.add(neighbor);
                 }
             }
 
             for (PackedCircle circle: currentLevel) {
-                allCircles.add(new Circle(new Point2D(circle.getProjectedX(), circle.getProjectedY()), origin.getRadius()));
+                if (inOuterCircle(circle)) {
+                    allCircles.add(new Circle(new Point2D(circle.getProjectedX(), circle.getProjectedY()), origin.getRadius()));
+                    continueLoop = true;
+                }
             }
             currentLevel.clear();
             currentLevel.addAll(nextLevel);
             nextLevel.clear();
-        }
+        } while(continueLoop);
 
         return allCircles;
     }
